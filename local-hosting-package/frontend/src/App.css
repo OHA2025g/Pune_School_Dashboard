@@ -1,0 +1,250 @@
+/* Maharashtra Education Dashboard - Custom Styles */
+
+/* Main Layout */
+.dashboard-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+.main-content {
+    flex: 1;
+    margin-left: 240px;
+    min-height: 100vh;
+    background-color: #f8fafc;
+}
+
+@media (max-width: 1024px) {
+    .main-content {
+        margin-left: 0;
+    }
+}
+
+/* Header */
+.dashboard-header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid #e2e8f0;
+}
+
+/* KPI Grid */
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+@media (min-width: 1280px) {
+    .kpi-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* Map Container */
+.map-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4/3;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-radius: 0.75rem;
+    overflow: hidden;
+}
+
+.map-container svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* District Card Hover Effect */
+.district-card {
+    transition: all 0.2s ease;
+}
+
+.district-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Table Enhancements */
+.ranking-table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.ranking-table tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+.ranking-table tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+/* Progress Bars */
+.progress-bar {
+    height: 8px;
+    border-radius: 4px;
+    background-color: #e2e8f0;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.5s ease;
+}
+
+.progress-bar-fill.green {
+    background-color: #10b981;
+}
+
+.progress-bar-fill.amber {
+    background-color: #f59e0b;
+}
+
+.progress-bar-fill.red {
+    background-color: #ef4444;
+}
+
+/* Tooltip */
+.custom-tooltip {
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(8px);
+    border-radius: 8px;
+    padding: 12px 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.custom-tooltip .label {
+    color: #94a3b8;
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+
+.custom-tooltip .value {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* Skeleton Loader */
+.skeleton {
+    background: linear-gradient(
+        90deg,
+        #f1f5f9 25%,
+        #e2e8f0 50%,
+        #f1f5f9 75%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* Badge Styles */
+.badge-excellent {
+    background-color: #dcfce7;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+}
+
+.badge-good {
+    background-color: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fde68a;
+}
+
+.badge-at-risk {
+    background-color: #fed7aa;
+    color: #9a3412;
+    border: 1px solid #fdba74;
+}
+
+.badge-critical {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+/* Chart Responsive */
+.recharts-responsive-container {
+    min-height: 300px;
+}
+
+/* Filter Pills */
+.filter-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 9999px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.filter-pill:hover {
+    transform: scale(1.02);
+}
+
+.filter-pill.active {
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+/* Empty State */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+.empty-state-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 1.5rem;
+    color: #cbd5e1;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #e2e8f0;
+    border-top-color: #3b82f6;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Print Styles */
+@media print {
+    .sidebar,
+    .dashboard-header {
+        display: none !important;
+    }
+    
+    .main-content {
+        margin-left: 0 !important;
+    }
+    
+    .kpi-card {
+        break-inside: avoid;
+    }
+}

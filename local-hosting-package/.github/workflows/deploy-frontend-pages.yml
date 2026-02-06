@@ -1,0 +1,68 @@
+name: Deploy Frontend to GitHub Pages
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: yarn
+          cache-dependency-path: frontend/yarn.lock
+
+      - name: Install Yarn (v1)
+        run: |
+          npm i -g yarn@1.22.22
+          yarn --version
+
+      - name: Install deps
+        working-directory: frontend
+        run: yarn install --frozen-lockfile --non-interactive --network-timeout 600000
+
+      - name: Build
+        working-directory: frontend
+        env:
+          # Ensure asset paths are correct for project pages: /<repo>/
+          PUBLIC_URL: /MAHA-Education-Dashboard
+          # CRA sets CI=true on GitHub which can fail the build on warnings; keep demo builds resilient.
+          CI: "false"
+        run: yarn build
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: frontend/build
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+
